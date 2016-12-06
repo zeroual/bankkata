@@ -13,6 +13,10 @@ public class Account {
         this.transactions.add(new Transaction(amount));
     }
 
+    public void withdraw(double amount) {
+        this.transactions.add(new Transaction(-amount));
+    }
+
     public double runningBalance() {
         return transactions.stream()
                 .mapToDouble(Transaction::amount)
