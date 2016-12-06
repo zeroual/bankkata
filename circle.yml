@@ -1,0 +1,5 @@
+# use this file to configure the continus integration plateforme
+# Now whe use https://circleci.com/
+machine:
+  java:
+    version: oraclejdk8
