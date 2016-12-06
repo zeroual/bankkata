@@ -1,6 +1,7 @@
 package features;
 
 import com.zeros.bankkata.Account;
+import com.zeros.bankkata.Clock;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,10 +12,12 @@ public class DepositMoneyFeature {
 
 
     private Account account;
+    private Clock clock;
 
     @Given("^a client with \"([^\"]*)\" EUR in his account$")
     public void initialiseAccount(String arg1) throws Throwable {
-        account = new Account();
+        clock = new Clock();
+        account = new Account(clock);
     }
 
     @When("^he deposits \"([^\"]*)\" EUR into his account$")
