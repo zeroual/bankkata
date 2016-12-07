@@ -1,10 +1,13 @@
 package com.zeros.bankkata.domain;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
+import static java.math.BigDecimal.ZERO;
 
 public class StatementPrinter {
     public static final String STATEMENT_HEADER = "| date       | amount | balance |\n";
@@ -29,20 +32,20 @@ public class StatementPrinter {
     }
 
     private List<String> renderStatementLines(List<Transaction> transactions) {
-        AtomicReference<Double> runningBalance = new AtomicReference<>(new Double(0));
+        AtomicReference<BigDecimal> runningBalance = new AtomicReference<>(ZERO);
         return transactions
                     .stream()
                     .map(transaction -> statementLine(transaction, runningBalance))
                     .collect(Collectors.toList());
     }
 
-    private String statementLine(Transaction transaction, AtomicReference<Double> runningBalance) {
+    private String statementLine(Transaction transaction, AtomicReference<BigDecimal> runningBalance) {
         return "| " + formatDate(transaction.date()) + " | "
                 + formatDecimal(transaction.amount()) + " | "
-                + formatDecimal(runningBalance.accumulateAndGet(transaction.amount(), (a, b) -> a + b)) + "   |\n";
+                + formatDecimal(runningBalance.accumulateAndGet(transaction.amount(), (a, b) -> a.add(b))) + "   |\n";
     }
 
-    private String formatDecimal(double amount) {
+    private String formatDecimal(BigDecimal amount) {
         return decimalFormat.format(amount);
     }
 

@@ -6,6 +6,8 @@ import com.zeros.bankkata.domain.Clock;
 import com.zeros.bankkata.domain.Printer;
 import com.zeros.bankkata.domain.StatementPrinter;
 
+import java.math.BigDecimal;
+
 public class BankKataApp {
 
 
@@ -14,9 +16,9 @@ public class BankKataApp {
         Clock clock = new Clock();
 
         Account account = new Account(clock);
-        account.deposit(12);
-        account.deposit(30);
-        account.withdraw(20);
+        account.deposit(new BigDecimal("12"));
+        account.deposit(new BigDecimal("30"));
+        account.withdraw(new BigDecimal("30"));
 
         StatementPrinter statementPrinter = new StatementPrinter(new Console());
         statementPrinter.printStatementOf(account);

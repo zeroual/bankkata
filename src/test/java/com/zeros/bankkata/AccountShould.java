@@ -7,17 +7,25 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.math.BigDecimal.TEN;
+import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class AccountShould {
 
-    private Account account;
 
+    public final BigDecimal FOUR = valueOf(4);
+    public final BigDecimal SIXTEEN = valueOf(16);
+    public final BigDecimal SIX = valueOf(6);
+    private final BigDecimal TWELVE = valueOf(12);
+    private final BigDecimal TWENTY = valueOf(20);
+    private Account account;
     @Mock
     private Clock clock = mock(Clock.class);
     private LocalDateTime now = dateOf("2016-12-06");
@@ -30,7 +38,7 @@ public class AccountShould {
 
     @Test
     public void saveDepositTransactionInAccount() {
-        double amountToDeposit = 12;
+        BigDecimal amountToDeposit = TWELVE;
         account.deposit(amountToDeposit);
         assertThat(account.transactions()).hasSize(1);
         assertThat(account.transactions()).containsExactly(depositTransaction(amountToDeposit, now));
@@ -38,31 +46,31 @@ public class AccountShould {
 
     @Test
     public void saveWithdrawalTransaction() {
-        account.deposit(20);
-        account.withdraw(12);
+        account.deposit(TWENTY);
+        account.withdraw(TWELVE);
         assertThat(account.transactions()).hasSize(2);
-        assertThat(account.transactions()).containsExactly(depositTransaction(20, now), withdrawTransaction(12, now));
+        assertThat(account.transactions()).containsExactly(depositTransaction(TWENTY, now), withdrawTransaction(TWELVE, now));
     }
 
 
     @Test
     public void computeTheRunningBalance() {
-        account.deposit(12);
-        assertThat(account.runningBalance()).isEqualTo(12);
-        account.deposit(4);
-        assertThat(account.runningBalance()).isEqualTo(16);
-        account.withdraw(10);
-        assertThat(account.runningBalance()).isEqualTo(6);
+        account.deposit(TWELVE);
+        assertThat(account.runningBalance()).isEqualTo(TWELVE);
+        account.deposit(FOUR);
+        assertThat(account.runningBalance()).isEqualTo(SIXTEEN);
+        account.withdraw(TEN);
+        assertThat(account.runningBalance()).isEqualTo(SIX);
 
     }
 
 
-    private Transaction depositTransaction(double amount, LocalDateTime date) {
+    private Transaction depositTransaction(BigDecimal amount, LocalDateTime date) {
         return new Transaction(amount, date);
     }
 
-    private Transaction withdrawTransaction(double amount, LocalDateTime date) {
-        return new Transaction(-amount, date);
+    private Transaction withdrawTransaction(BigDecimal amount, LocalDateTime date) {
+        return new Transaction(amount.negate(), date);
     }
 
     private LocalDateTime dateOf(String stringDate) {
