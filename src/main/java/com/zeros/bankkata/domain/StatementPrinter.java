@@ -1,4 +1,4 @@
-package com.zeros.bankkata;
+package com.zeros.bankkata.domain;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;

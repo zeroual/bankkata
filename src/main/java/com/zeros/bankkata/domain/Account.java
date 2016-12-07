@@ -1,4 +1,4 @@
-package com.zeros.bankkata;
+package com.zeros.bankkata.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

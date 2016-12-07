@@ -1,4 +1,4 @@
-package com.zeros.bankkata;
+package com.zeros.bankkata.domain;
 
 
 public interface Printer {
