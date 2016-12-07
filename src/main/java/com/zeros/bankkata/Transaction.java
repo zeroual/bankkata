@@ -1,18 +1,25 @@
 package com.zeros.bankkata;
 
 
+import java.time.LocalDateTime;
+
 public class Transaction {
 
     private final double amount;
+    private LocalDateTime date;
 
-    public Transaction(double amount) {
+    public Transaction(double amount, LocalDateTime date) {
         this.amount = amount;
+        this.date = date;
     }
 
     public double amount() {
         return this.amount;
     }
 
+    public LocalDateTime date() {
+        return date;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -20,14 +27,18 @@ public class Transaction {
 
         Transaction that = (Transaction) o;
 
-        return Double.compare(that.amount, amount) == 0;
+        if (Double.compare(that.amount, amount) != 0) return false;
+        return date != null ? date.equals(that.date) : that.date == null;
 
     }
 
     @Override
     public int hashCode() {
-        long temp = Double.doubleToLongBits(amount);
-        return (int) (temp ^ (temp >>> 32));
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(amount);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
     }
-
 }

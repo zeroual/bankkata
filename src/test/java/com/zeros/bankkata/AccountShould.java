@@ -2,16 +2,27 @@ package com.zeros.bankkata;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class AccountShould {
 
     private Account account;
 
+    @Mock
+    private Clock clock = mock(Clock.class);
+    private LocalDateTime now = dateOf("2016-12-06");
+
     @Before
     public void initialise() {
-        account = new Account();
+        account = new Account(clock);
+        when(clock.now()).thenReturn(now);
     }
 
     @Test
@@ -19,7 +30,7 @@ public class AccountShould {
         double amountToDeposit = 12;
         account.deposit(amountToDeposit);
         assertThat(account.transactions()).hasSize(1);
-        assertThat(account.transactions()).containsExactly(depositTransaction(amountToDeposit));
+        assertThat(account.transactions()).containsExactly(depositTransaction(amountToDeposit, now));
     }
 
     @Test
@@ -27,7 +38,7 @@ public class AccountShould {
         account.deposit(20);
         account.withdraw(12);
         assertThat(account.transactions()).hasSize(2);
-        assertThat(account.transactions()).containsExactly(depositTransaction(20), withdrawTransaction(12));
+        assertThat(account.transactions()).containsExactly(depositTransaction(20, now), withdrawTransaction(12, now));
     }
 
 
@@ -43,11 +54,17 @@ public class AccountShould {
     }
 
 
-    private Transaction depositTransaction(double amount) {
-        return new Transaction(amount);
+    private Transaction depositTransaction(double amount, LocalDateTime date) {
+        return new Transaction(amount, date);
     }
 
-    private Transaction withdrawTransaction(double amount) {
-        return new Transaction(-amount);
+    private Transaction withdrawTransaction(double amount, LocalDateTime date) {
+        return new Transaction(-amount, date);
+    }
+
+    private LocalDateTime dateOf(String stringDate) {
+        stringDate += " 00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(stringDate, formatter);
     }
 }
