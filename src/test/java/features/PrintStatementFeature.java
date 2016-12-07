@@ -1,9 +1,9 @@
 package features;
 
-import com.zeros.bankkata.Account;
-import com.zeros.bankkata.Clock;
-import com.zeros.bankkata.Printer;
-import com.zeros.bankkata.StatementPrinter;
+import com.zeros.bankkata.domain.Account;
+import com.zeros.bankkata.domain.Clock;
+import com.zeros.bankkata.domain.Printer;
+import com.zeros.bankkata.domain.StatementPrinter;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 

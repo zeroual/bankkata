@@ -1,5 +1,8 @@
 package com.zeros.bankkata;
 
+import com.zeros.bankkata.domain.Account;
+import com.zeros.bankkata.domain.Clock;
+import com.zeros.bankkata.domain.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
