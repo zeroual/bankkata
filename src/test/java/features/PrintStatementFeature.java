@@ -7,6 +7,7 @@ import com.zeros.bankkata.domain.StatementPrinter;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -21,18 +22,18 @@ public class PrintStatementFeature {
     private StatementPrinter statementPrinter = new StatementPrinter(printer);
 
     @Given("^a client deposits \"([^\"]*)\" EUR in his account on \"([^\"]*)\"$")
-    public void clientDepositsMoney(double amount, String date) throws Throwable {
+    public void clientDepositsMoney(BigDecimal amount, String date) throws Throwable {
         when(clock.now()).thenReturn(dateOf(date));
         account.deposit(amount);
     }
 
     @Given("^he deposits \"([^\"]*)\" EUR into his account on \"([^\"]*)\"$")
-    public void he_deposits_EUR_into_his_account_on(double amount, String date) throws Throwable {
+    public void he_deposits_EUR_into_his_account_on(BigDecimal amount, String date) throws Throwable {
         clientDepositsMoney(amount, date);
     }
 
     @Given("^he withdraws \"([^\"]*)\" EUR form his account on \"([^\"]*)\"$")
-    public void clientWithdrawsMoney(double amount, String date) throws Throwable {
+    public void clientWithdrawsMoney(BigDecimal amount, String date) throws Throwable {
         when(clock.now()).thenReturn(dateOf(date));
         account.withdraw(amount);
     }

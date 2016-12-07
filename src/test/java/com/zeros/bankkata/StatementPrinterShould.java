@@ -7,6 +7,7 @@ import com.zeros.bankkata.domain.StatementPrinter;
 import org.junit.Before;
 import org.junit.Test;
 
+import static java.math.BigDecimal.valueOf;
 import static java.time.LocalDateTime.parse;
 import static org.mockito.Mockito.*;
 
@@ -30,14 +31,14 @@ public class StatementPrinterShould {
 
     @Test
     public void printAllTransactions() {
-        account.deposit(12);
-        account.deposit(20);
-        account.withdraw(15);
+        account.deposit(valueOf(12));
+        account.deposit(valueOf(20));
+        account.withdraw(valueOf(15));
         String output =
                 "| date       | amount | balance |\n" +
-                "| 2016-12-06 | -15,00 | 17,00   |\n" +
-                "| 2016-12-06 | 20,00 | 32,00   |\n" +
-                "| 2016-12-06 | 12,00 | 12,00   |\n";
+                        "| 2016-12-06 | -15.00 | 17.00   |\n" +
+                        "| 2016-12-06 | 20.00 | 32.00   |\n" +
+                        "| 2016-12-06 | 12.00 | 12.00   |\n";
         statementPrinter.printStatementOf(account);
         verify(printer).printText(output);
     }
