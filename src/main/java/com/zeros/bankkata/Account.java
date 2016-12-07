@@ -19,10 +19,6 @@ public class Account {
         this.transactions.add(new Transaction(amount, now()));
     }
 
-    private LocalDateTime now() {
-        return clock.now();
-    }
-
     public void withdraw(double amount) {
         this.transactions.add(new Transaction(-amount, now()));
     }
@@ -35,5 +31,9 @@ public class Account {
 
     public List<Transaction> transactions() {
         return unmodifiableList(this.transactions);
+    }
+
+    private LocalDateTime now() {
+        return clock.now();
     }
 }

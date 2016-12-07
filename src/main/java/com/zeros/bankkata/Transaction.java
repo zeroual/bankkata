@@ -17,6 +17,9 @@ public class Transaction {
         return this.amount;
     }
 
+    public LocalDateTime date() {
+        return date;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
