@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/zeroual/bankkata/branch/master/graph/badge.svg)](https://codecov.io/gh/zeroual/bankkata)
+
 Simple bank account kata solution with cucumber :)
 ==================================================
 
